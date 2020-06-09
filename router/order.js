@@ -28,7 +28,7 @@ router.get(['/', '/:page/:size'], (req, res) => {
 
 // /order/:id
 router.get('/:id([0-9]+)', (req, res, next) => {
-    api.newSession(req);
+    //api.newSession(req);
 
     request(api.endpoint() + '/order' + req.url, (error, response, body) => {
         if(!error && response.statusCode == 200)
@@ -36,7 +36,8 @@ router.get('/:id([0-9]+)', (req, res, next) => {
          //   res.render('order-detail', { data: api.toJson(body).data });
 
             var data = api.toJson(body).data
-            res.render('order-detail', { cookie:api.session(req), ws_server_url: process.env.WS_SERVER_URL, data: data });
+            data.payStatus = 'completed'
+            res.render('order-detail', { cookie: 'api.session(req)', ws_server_url: process.env.WS_SERVER_URL, data: data });
 
         }    
 
