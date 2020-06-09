@@ -51,7 +51,7 @@ app.use('/order', require('./router/order'));
 var webSocketServer = require('ws').Server;
 var wss = new webSocketServer({port:3000});
 
-console.log("web-socket server listen on 3000");
+//console.log("web-socket server listen on 3000");
 wss.on("connection", (socket) => {
     socket.send(getServerMessage("I am websocket server..."));
    
@@ -113,7 +113,7 @@ function getServerMessage(str) {
 function checkPaymentStatus(orderId, onFail, onSuccess) {
     var mysql = require('mysql');
     var connection = mysql.createConnection({
-        host     : 'mbp-aurora-instance-1.cwhptybasok6.ap-northeast-2.rds.amazonaws.com',
+        host     : 'localhost',
         user     : 'demo',
         password : 'demo',
         database : 'shop'    
