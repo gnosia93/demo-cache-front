@@ -14,36 +14,6 @@ router.get('/test', (req, res) => {
 router.get('/', (req, res) => {
     //api.newSession(req);
 
-    //console.log("session id " + req.sessionID);
-    //req.session.email = 'email';
-
-    /*
-    var mysqlRows = [];
-
-    var myConnection = mysql.createConnection( {
-        host: 'mbp-aurora-instance-1.cwhptybasok6.ap-northeast-2.rds.amazonaws.com',
-        user: 'demo',
-        password: 'demo',
-        port: 3306,
-        database: 'shop'
-    });
-
-    myConnection.connect();
-    myConnection.query('select count(1) as cnt from product', (err, rows, fields) => {
-        var result;
-        if(!err) {
-            result = rows[0].cnt;
-        //    console.log(result);
-        }   
-
-    });
-    
-    myConnection.end();
-
-    */
-    
-
-
     /* backend health check */
     request(api.endpoint() + '/', (error, response, body) => {
         if(!error && response.statusCode == 200)
