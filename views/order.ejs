@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Sample Page</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    </head>
+
+<body>
+    <%- include('includes/header.ejs') %>
+
+    <h1>주문 리스트 
+    <a href="/"><button>Home</button></a>
+    <a href="/product/"><button>상품리스트</button></a></h1>
+
+    <table>
+        <tr>
+            <th>주문번호</th>
+            <th>상품번호</th>
+            <th>주문금액</th>
+            <th>결제상태</th>
+            <th width="170px">주문일시</th>
+            <th width="170px">결제일시</th>
+            <th width="170px">오류일시</th>
+            <th>오류메시지</th>
+        </tr>
+    <% data.forEach(e => { %>
+        <tr height="40px">
+            <td><a href="/order/<%= e.orderId %>"><%= e.orderId %></a></td>
+            <td><a href="/product/<%= e.productId %>"><img src="<%= e.thumImageUrl %>" width="65" height="65"></a></td>
+            <td><%= e.orderPrice %> </td>
+            <td><%= e.payStatus %></td>
+            <td><%= e.orderDate %></td>
+            <td><%= e.payDate %></td>
+            <td><%= e.errorDate %></td>
+            <td><%= e.errorMessage %></td>
+        </tr>   
+    <% }) %>
+    </table>
+
+</body>
+</html>

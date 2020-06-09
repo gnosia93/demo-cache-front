@@ -1,0 +1,26 @@
+#
+# https://bcho.tistory.com/1262
+# https://bcho.tistory.com/1263
+# kubectl create -f mbp-front-svc.yaml
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mbp-front-svc-ws
+spec:
+  selector:
+    app: mbp-front
+  ports:
+    - name : websocket
+      port: 80
+      protocol: TCP
+      targetPort: 3000  
+  type: LoadBalancer
+  #  type: LoadBalancer Cluster IP, Node IP, External name
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Sample Page</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    </head>
+    <body>
+        <%- include('includes/header.ejs') %>
+
+        <h1>상품 리스트 <a href="/"><button>Home</button></a><a href="/order/"><button>주문리스트</button></a></h1>
+        <table>
+                <tr>
+                    <th>상품번호</th>
+                    <th>이미지</th>
+                    <th width="250px">상품명</th>
+                    <th>가격</th>
+                    <th>배송타입</th>
+                    <th>상품평수</th>
+                    <th>구매수</th>
+                </tr>
+            <% data.forEach(e => { %>
+                <tr>
+                    <td><%= e.productId %></a></td>
+                    <td><a href="/product/<%= e.productId %>"><img src="<%= e.imageUrl %>" width="65" height="65"></a></td>
+                    <td><a href="/product/<%= e.productId %>"><%= e.name %></a></td>
+                    <td class="center"><%= e.price %></td>
+                    <td class="center"><%= e.deliveryType %></td>
+                    <td class="center"><%= e.commentCount %></td>
+                    <td class="center"><%= e.buyCount %></td>
+                </tr>   
+            <% }) %>
+        </table>
+    </body>
+</html>
+
+<!--
+{
+  productId: 3,
+  name: '청바지3',
+  price: 300,
+  description: null,
+  thumImageUrl: null,
+  imageUrl: null,
+  deliveryType: 'Free',
+  commentCount: 0,
+  buyCount: 18493
+}
+
+-->

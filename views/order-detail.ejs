@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+    <title> Native WebSocket Example </title>
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+        }
+        
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }    
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(() => {
+               
+            if( $("#payStatus").text() == 'Queued' )
+            {
+
+                // 코드 수정 필요.
+                var ws = new WebSocket('<%= ws_server_url %>');
+                ws.onopen = (event) => {
+                    ws.send("orderId: " + document.getElementById("orderId").textContent);
+                }    
+                ws.onmessage = (event) => {
+                    console.log("payment processing: ", event.data);
+                    if(event.data != null && event.data.includes('payok'))
+                    {
+                        console.log('payment completed..');
+                        $(".loader").hide();
+                        $("#payStatus").html('<font color="red">Async Payment Completed</font>')
+                    }
+                }
+                ws.onerror =(event) => {
+                    console.log("Server error message: ", event.data);
+                }
+            }
+            else {
+                // DB 단에서 처리가 완료된 경우 모래시계를 출력하지 않는다. 
+                $(".loader").hide();
+            }
+        });
+
+       
+    </script>
+   
+</head>
+<body>
+
+    <%- include('includes/header.ejs') %>
+    <h1> 주문서 <a href="/"><button>home</button></a>
+        <a href="/order/1/10"><button>주문리스트</button></a>
+    </h1>
+    <table class="order">
+        <% if(data != null) { %>
+            <tr class="order">
+                <td>주문번호</td> 
+                <td><span id="orderId"><%= data.orderId %></span></td> 
+            </tr>
+            <tr class="order">
+                <td>상품번호</td> 
+                <td><a href="/product/<%= data.productId %>"><%= data.productId %></a></td> 
+            </tr>
+            <tr class="order">
+                <td>주문가격</td> 
+                <td><%= data.orderPrice %></td> 
+            </tr>
+            <tr class="order">
+                <td>주문일시</td> 
+                <td><%= data.orderDate %></td> 
+            </tr>
+            <tr class="order">
+                <td>결제상태</td> 
+                <td><span id="payStatus"><%= data.payStatus %></span></td> 
+            </tr>
+            <!--tr class="order">
+                <td>결제일시</td> 
+                <td><%= data.payDate %></td> 
+            </tr>
+            <tr class="order">
+                <td>오류일시</td> 
+                <td><%= data.errorDate %></td> 
+            </tr>
+            <tr class="order">
+                <td>오류메시지</td> 
+                <td><%= data.errorMessage %></td> 
+            </tr-->
+     
+        <% } else { %>
+            <tr><td>주문정보가 존재하지 않음</td></tr>
+        <% } %>
+    </table>
+    <div class="loader" align="center"></div>
+
+</body>
+</html>

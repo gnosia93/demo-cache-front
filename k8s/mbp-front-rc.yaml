@@ -1,0 +1,31 @@
+#
+# kubectl create -f mbp-front-rc.yaml 
+# kubectl get pod
+# kubectl describe pod mbp-front-rc-8gbl8
+# kubectl exec -it mbp-front-rc-8gbl8 -- curl 192.168.66.119:8080/product/
+#
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: mbp-front-rc
+spec:
+  replicas: 6
+  selector:
+    app: mbp-front
+  template:
+    metadata:
+      name: mbp-front-pod
+      labels:
+        app: mbp-front
+    spec:
+      containers:
+      - name: mbp-front
+        image: 509076023497.dkr.ecr.ap-northeast-2.amazonaws.com/mbp-front:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http 
+        - containerPort: 3000 
+          name: websocket
+        

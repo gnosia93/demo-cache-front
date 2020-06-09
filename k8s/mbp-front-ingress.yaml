@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mbp-front-ingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/security-groups: sg-08a8d4aae44b9f439
+    alb.ingress.kubernetes.io/subnets: subnet-06eda9ab9da87b080, subnet-06d88d4ed700c1e48
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=1800
+
+
+spec:
+  rules:
+    - http: 
+       paths:
+         - path: /*
+           backend: 
+              serviceName: mbp-front-svc
+              servicePort: 80
+       

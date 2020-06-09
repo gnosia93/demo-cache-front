@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>주문/결제 비동기 처리</h1>
+            <p>Queue & WebSocket</p> 
+        </div>
+        
+        <div class="container p-3 my-3 border">
+            <h2 class="text-center"><strong>아키텍처</strong></h2>
+            <br>
+            <img class="img-fluid rounded mx-auto d-block" src="https://ocktank-prod-image.s3.ap-northeast-2.amazonaws.com/architecture/ocktank-poc-3.png">
+            <br><br><br>     
+
+        </div>    
+
+        <div class="container p-3 my-3 border">
+            <h2 class="text-center"><strong>데모 순서</strong></h2>
+        <br>
+        
+        <h5 class="text-xl-left"> 1. 결제 서버 delaytime 수정</h5> 
+        <pre>
+        <code>   
+        $ ssh -i keypair.pem ec2-user@ec2-15-164-165-195.ap-northeast-2.compute.amazonaws.com
+        
+        $ cd /home/ec2-user/app/mbp-backend-kafka
+        $ vi Payment.py
+          59번 라인 주석처리 (delay = 0)
+        
+        $ ./run.sh  
+        $ ps aux | grep python
+        $ tail -f payment.log     
+        </code>
+        </pre>    
+
+        <h5 class="text-xl-left"> 2. 크롬 브라우저 개발자 도구 Enable</h5><br><br>
+        <pre> 
+        <code>
+        개발자 도구를 이용하여 웹소켓 동작(서버 Push)을 확인 한다. (보기->개발자정보->개발자도구)
+        </code>
+        </pre>
+        
+       
+        <h5 class="text-xl-left"> 3. 주문생성</h5> 
+        <pre>
+        <code>
+        상품상세 페이지를 이동하여 [주문하기] 버튼을 클릭하고 해당 주문의 결제여부를 확인한다. 
+        </code>
+        </pre>    
+
+        </div>
+        <div class="container p-3 my-3">
+        <button type="button" class="btn btn-primary pull-right" onclick="javascript:history.back()">Home</button>
+        </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

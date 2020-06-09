@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <title>Sample Page</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    </head>
+
+    <body>
+        <%- include('includes/header.ejs') %>
+
+        <h1>상품상세 <a href="/"><button>Home</button></a>
+            <a href="/product"><button>상품리스트</button></a>
+        </h1>
+        <table class="product_outer">
+            <tr class="product_outer">
+                <td class="product_outer" width="260px">
+                    <img src="<%= data.imageUrl %>" width="250px" height="250px">
+                </td>
+                <td class="product_outer">
+                    <table class="product" align="right">
+                    <% if(data != null) { %>
+                        <tr class="product">
+                            <td class="product">상품번호</td> 
+                            <td class="product"><%= data.productId %></td>
+                        </tr>
+                        <tr class="product">
+                            <td class="product">상품명</td> 
+                            <td class="product"><%= data.name %> </td>
+                        </tr>
+                        <tr class="product">
+                            <td class="product">가격</td> 
+                            <td class="product"><%= data.price %></td>
+                        </tr>
+                        <tr class="product">
+                            <td class="product">배송료</td> 
+                            <td class="product"><%= data.deliveryType %></td>
+                        </tr>
+                        <tr class="product">
+                            <td class="product">상품평수</td> 
+                            <td class="product"><%= data.commentCount %></td>
+                        </tr>
+                        <tr class="product">
+                            <td class="product">구매건수</td> 
+                            <td class="product"><%= data.buyCount %></td>
+                        </tr>
+                        <tr class="product">
+                            <td class="product">이벤트구매건수</td> 
+                            <td class="product"><%= data.eventBuyCount %></td>
+                        </tr>
+                      
+                    <% } else { %>
+                        <tr class="product">
+                            <td class="product">존재하지 않는 상품</td>        
+                        </tr>
+                    <% } %>
+                    </table>   
+                </td>
+            </tr>
+            <tr class="product">
+                <td class="product">&nbsp;</td>
+                <td class="product_right">
+                    <form action="/order/add/" method="post">
+                    <input type="hidden" name="productId" value="<%= data.productId %>">
+                        <input type="submit" class="button" value="주문하기">
+                    </form>
+                </td>
+            </tr>
+
+            <!-- history-->
+            <!--tr class="product">
+                <td class="product_outer" colspan="2">
+                <BR>
+                ## 최근 본 상품 ##
+                <BR><BR>
+                <table class="product_history">
+                <tr class="product_history">
+                <% if(history != null) {
+                        var counter = 0;
+                        history.forEach(e => { 
+                            if(++counter > 5)
+                                return false;
+                            %>
+                            <td class="product_history">
+                            <p align=center>
+                                <img src="<%= e.imageUrl %>" width="80" height="80" style="border:1px solid black">
+                                <br><%= e.productId %>
+                            </p>
+                            </td>
+                            <%
+                        });
+                } %>
+                </tr>
+                </table>
+                </td>
+            </tr-->
+           
+
+        </table>
+    </body>
+</html>
+

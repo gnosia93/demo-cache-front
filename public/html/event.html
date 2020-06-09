@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>수량제한이 있는 이벤트 처리</h1>
+            <p>DB only vs with Redis</p> 
+        </div>
+        
+        <div class="container p-3 my-3 border">
+            <h2 class="text-center"><strong>아키텍처</strong></h2>
+            <br>
+            <img class="img-fluid rounded mx-auto d-block" src="https://ocktank-prod-image.s3.ap-northeast-2.amazonaws.com/architecture/ocktank-poc-2.png">
+            <br> 
+
+        </div>    
+
+        <div class="container p-3 my-3 border">
+            <h2 class="text-center"><strong>데모 순서</strong></h2>
+        <br><br>
+        <h5 class="text-xl-left"> 1. 주문생성(DB only)</h5>
+
+        <!-- class="text-white bg-dark text-left"-->
+        <pre>
+        <code>
+        $ cd /Users/soonbeom/mbp/aws-mbp/benchmark   
+
+        $ cat order-db.sh
+          
+                #!/bin/sh
+                host=InternetFacingLB-1710592160.ap-northeast-2.elb.amazonaws.com
+                <font color=blue>target=http://$host/order/add</font>
+                ab -l -p order-payload.json -T 'application/json;charset=utf-8' -e order-payload.csv -c 150 -n 3000 $target
+
+
+        $ cat order-payload.json
+
+                {
+                    "orderId": 0,
+                    "productId": 341469, <font color=red>(webpage 에서 상품ID 조회후 수정)</font>
+                    "orderPrice": 1000,
+                }
+             
+
+        $ <font color=blue>./order-db.sh</font> 
+
+        <p class="text-light bg-dark">
+        $ mysql -u root -p -h ec2-13-124-48-41.ap-northeast-2.compute.amazonaws.com shop
+        
+        mysql> select database();
+        mysql> select * from shop.product where product_id = 341469; <font color=red>(webpage 에서 상품ID 조회후 수정)</font>
+        mysql> select count(1) from shop.`order`;
+        </p>
+        </code>
+        </pre>  
+
+        <h5 class="text-xl-left"> 2. 주문생성(with Redis)</h5><br><br>
+        <pre>
+        <code>
+        $ cd /Users/soonbeom/mbp/aws-mbp/benchmark   
+
+        $ cat order-redis.sh
+            
+                #!/bin/sh
+                host=InternetFacingLB-1710592160.ap-northeast-2.elb.amazonaws.com
+                <font color=blue>target=http://$host/order/event-add</font>
+                ab -l -p order-payload.json -T 'application/json;charset=utf-8' -e order-payload.csv -c 150 -n 3000 $target
+
+
+        $ cat order-payload.json
+
+        $ <font color=blue>./order-redis.sh</font>
+        
+        
+        <p class="text-light bg-dark">
+        $ mysql -u root -p -h ec2-13-124-48-41.ap-northeast-2.compute.amazonaws.com shop
+        
+        mysql> select database();
+        mysql> select * from shop.product where product_id = 341469; <font color=red>(webpage 에서 상품ID 조회후 수정)</font>
+        mysql> select count(1) from shop.`order`;
+
+
+        $ ssh -i keypair.pem ec2-user@ec2-13-124-48-41.ap-northeast-2.compute.amazonaws.com
+        
+        $ telnet 10.0.1.221 6379
+        get sell_cnt_341469
+        </p>    
+        </code>
+        </pre>  
+        </div>
+        <div class="container p-3 my-3">
+        <button type="button" class="btn btn-primary pull-right" onclick="javascript:history.back()">Home</button>
+        </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
