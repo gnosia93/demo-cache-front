@@ -12,3 +12,4 @@ export APP_HOME=/home/ec2-user/demo-cache-front
 
 npm install
 sudo nohup cross-env NODE_ENV=prod node index.js > $APP_HOME/node.log 2>&1 &
+ps aux | grep node
