@@ -8,6 +8,7 @@
 #    값을 수정한다. 
 # 3. cross-env 를 이용하여 node.js 를 실행한다.
 
+export APP_HOME=/home/ec2-user/demo-cache-front
 
 npm install
-sudo cross-env NODE_ENV=prod node index.js
+sudo nohup cross-env NODE_ENV=prod node index.js > $APP_HOME/node.log 2>&1 &
