@@ -18,7 +18,7 @@ setExecEnvironment();
 console.log(path.join(__dirname, '/config/.env.prod'));
 console.log("env ", process.env);
 
-const LISTEN_PORT = 8080;
+const LISTEN_PORT = 80;
 var app = express();
 var server = app.listen(LISTEN_PORT, function() {
     console.log("express server listen on " + LISTEN_PORT);
