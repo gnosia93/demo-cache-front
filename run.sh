@@ -10,4 +10,4 @@
 
 
 npm install
-cross-env NODE_ENV=prod node index.js
+sudo cross-env NODE_ENV=prod node index.js
