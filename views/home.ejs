@@ -36,50 +36,24 @@
                 setTimeout("location.reload(true);",timeoutPeriod);
             }
                 
-            window.onload = timedRefresh(5000);
+            window.onload = timedRefresh(10000);
         </script>
 
 
         <%- include('includes/header.ejs') %>
-
-
-        <div id="dialog" title="Instructions">
-            1. EKS POD 스케줄링
-            <br><br>
-            2. Backend CI-CD Using AWSCode Series
-            <a href='https://ap-northeast-2.console.aw<s.amazon.com/codesuite/codepipeline/pipelines/mbp-spring-boot-backend/view?region=ap-northeast-2'>Backend</a>
+ 
+        <div>
+            <a href="/product/"><button>상품리스트</button></a>
+            <a href="/order/"><button>주문리스트</button></a>
         </div>
-
-
-        <table class="normal">
-            <tr class="normal">
-                <td colspan="2" class="normal">    
-                    <a href="/product/"><button>상품리스트</button></a>
-                    <a href="/order/"><button>주문리스트</button></a>
-                </td>
-            </tr>
-            <tr class="normal">
-                <!--td valign="top" class="normal">
-                    < left pane -->
-                    <!--h4><p class="underline-on-hover"><a href="/static/html/dms.html">Demo #1. 실시간 데이터 마이그레이션(ORACLE -> Aurora MySQL)</a></p></h4>
-                    <h4><p class="underline-on-hover"><a href="/static/html/event.html">Demo #2. 수량제한이 있는 이벤트 처리(DB only Vs with Redis)</a></h4>
-                    <h4><p class="underline-on-hover"><a href="/static/html/async.html">Demo #3. 주문/결제 비동기 처리(Queue & WebSocket)</a></h4>
-                    <h4><p class="underline-on-hover"><a href="/static/html/history.html">Demo #4. 유저별 상품조회 이력관리(/w Redis)</a></h4>
-                </td -->
-                <td><h2>Architecture</h2></td>
-                <td valign="top" class="normal">
-                        <!-- right pane -->
-                    <image src="https://ocktank-prod-image.s3.ap-northeast-2.amazonaws.com/architecture/infra-architecture.png"></image>
-                </td>
-            </tr>
-            <tr class="normal">
-                <td class="normal" colspan="2">
-                    Backend API HealthCheck <br>
-                    <%= data %>
-                </td>
-            </tr>
-        </table>
-      
+        <div style="align-content: center;">
+            <!--image src="https://ocktank-prod-image.s3.ap-northeast-2.amazonaws.com/architecture/infra-architecture.png" class="center" /-->
+            <image src="https://ocktank-prod-image.s3.ap-northeast-2.amazonaws.com/architecture/ocktank-poc-2.png" class="center" />        
+        </div>
+        <div>
+            Backend API HealthCheck <br>
+            <%= data %>
+        </div>
         <%- include('includes/footer.ejs') %>
     
     </body>
