@@ -1,36 +1,8 @@
 <html>
     <head>
-        <title>Sample Page</title>
-        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script>
-            $( function() {
-                $( "#dialog" ).dialog({
-                    autoOpen: false,
-                    width: '500px',
-                    focus: false,
-                    show: {
-                        effect: "blind",
-                        duration: 500
-                    },
-                    hide: {
-                        effect: "explode",
-                        duration: 1000
-                    }
-                });
-
-                $( "#opener" ).on( "click", function() {
-                    $( "#dialog" ).dialog( "open" );
-                });
-            } );
-        </script>
+        <title>Sample Home</title> 
     </head>
     <body>
-
-
-        
         <script>
             function timedRefresh(timeoutPeriod) {
                 setTimeout("location.reload(true);",timeoutPeriod);
@@ -39,17 +11,20 @@
             window.onload = timedRefresh(10000);
         </script>
 
-
         <%- include('includes/header.ejs') %>
  
         <div>
             <a href="/product/"><button>상품리스트</button></a>
             <a href="/order/"><button>주문리스트</button></a>
         </div>
+        <p style="align-content: center;"><h1>Eliminating Database Hot Blocks with Amazon ElastiCache</h1></p>
+        <br>
         <div style="align-content: center;">
-            <!--image src="https://ocktank-prod-image.s3.ap-northeast-2.amazonaws.com/architecture/infra-architecture.png" class="center" /-->
-            <image src="https://ocktank-prod-image.s3.ap-northeast-2.amazonaws.com/architecture/ocktank-poc-2.png" class="center" />        
+            <image src="https://ocktank-prod-image.s3.ap-northeast-2.amazonaws.com/architecture/infra-architecture.png" width="500" height="500">
+            <image src="https://ocktank-prod-image.s3.ap-northeast-2.amazonaws.com/architecture/ocktank-poc-2.png" width="600" height="380" />        
         </div>
+        <br><br>
+        <hr style="border:none; border:0.5px dashed gray;">
         <div>
             Backend API HealthCheck <br>
             <%= data %>
